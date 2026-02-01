@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Batman ❤️ Azra</title>
+
+<style>
+*{box-sizing:border-box;font-family:'Comic Sans MS',cursive}
+
+body{
+  margin:0;
+  height:100vh;
+  background:
+    radial-gradient(circle at top, rgba(255,215,0,0.18), transparent 40%),
+    linear-gradient(180deg,#0b0f1a,#000);
+  overflow:hidden;
+  color:white;
+}
+
+/* BAT SIGNAL */
+.batsignal{
+  position:fixed;
+  top:-140px;
+  left:50%;
+  transform:translateX(-50%);
+  width:320px;
+  height:320px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(255,215,0,.3),transparent 70%);
+  animation:signal 4s ease-in-out infinite alternate;
+  pointer-events:none;
+}
+@keyframes signal{
+  from{opacity:.2}
+  to{opacity:.6}
+}
+
+/* BATMAN */
+#batman{
+  position:absolute;
+  width:140px;
+  top:20%;
+  left:-200px;
+  animation:flyAcross 4s ease forwards;
+  z-index:5;
+}
+@keyframes flyAcross{
+  to{left:110%}
+}
+.peek{
+  animation:peek 2s ease forwards;
+}
+@keyframes peek{
+  to{left:75%}
+}
+
+/* CARD */
+#card{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  opacity:0;
+  animation:fadeIn 1.2s ease forwards;
+  animation-delay:4.2s;
+}
+@keyframes fadeIn{to{opacity:1}}
+
+#text{font-size:22px;margin-bottom:10px}
+
+/* CAT */
+#cat{
+  width:150px;
+  animation:float 2.2s ease-in-out infinite;
+}
+@keyframes float{
+  50%{transform:translateY(-12px)}
+}
+
+/* PAW */
+#paw{
+  position:absolute;
+  width:32px;
+  margin-top:-40px;
+  animation:wave 1s infinite;
+}
+@keyframes wave{
+  50%{transform:rotate(25deg)}
+}
+
+/* BUTTONS */
+.buttons{
+  margin-top:20px;
+  display:flex;
+  gap:20px;
+}
+button{
+  padding:10px 26px;
+  border:none;
+  border-radius:25px;
+  font-size:16px;
+  cursor:pointer;
+}
+#yes{
+  background:#ff4d6d;
+  color:white;
+  opacity:.4;
+  pointer-events:none;
+}
+#no{
+  background:#333;
+  color:white;
+  position:relative;
+}
+
+/* FINAL */
+#final{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:radial-gradient(circle,#ffdde1,#1f1f2e);
+  color:#000;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  z-index:10;
+}
+
+/* PAT */
+.pat{
+  animation:pat 1s infinite alternate;
+}
+@keyframes pat{
+  to{transform:translateY(10px)}
+}
+
+/* HEARTS + KISSES */
+.heart,.kiss{
+  position:fixed;
+  font-size:22px;
+  animation:fall 3s linear forwards;
+}
+@keyframes fall{
+  from{top:-10%}
+  to{top:110%}
+}
+</style>
+</head>
+
+<body>
+
+<div class="batsignal"></div>
+
+<img src="batman.png" id="batman">
+
+<div id="card">
+  <div id="text">Hi Azra… I’m Batman 🦇</div>
+
+  <img src="cat.png" id="cat">
+  <img src="cat.png" id="paw">
+
+  <p id="question">Will you be my Valentine? 💖</p>
+
+  <div class="buttons">
+    <button id="yes">Yes 🥹</button>
+    <button id="no">No 😏</button>
+  </div>
+</div>
+
+<div id="final">
+  <h1>🖤 Azra & Batman 🦇</h1>
+  <p>love you meri hurr parii 💖</p>
+</div>
+
+<audio id="song" src="song.mp3"></audio>
+
+<script>
+const batman=document.getElementById("batman");
+setTimeout(()=>batman.classList.add("peek"),4200);
+
+const noBtn=document.getElementById("no");
+const yesBtn=document.getElementById("yes");
+const text=document.getElementById("text");
+
+let step=0;
+const lines=[
+  "Really Azra? 🥺",
+  "Batman is nervous 😳",
+  "Last chance… say YES 💖"
+];
+
+noBtn.onclick=()=>{
+  if(step<3){
+    text.innerText=lines[step];
+    step++;
+    if(step===3){
+      yesBtn.style.opacity=1;
+      yesBtn.style.pointerEvents="auto";
+    }
+  }else{
+    noBtn.style.left=Math.random()*80-40+"px";
+    noBtn.style.top=Math.random()*60-30+"px";
+  }
+};
+
+yesBtn.onclick=()=>{
+  document.getElementById("card").style.display="none";
+  document.getElementById("final").style.display="flex";
+  document.getElementById("song").play();
+
+  batman.style.left="40%";
+  batman.classList.add("pat");
+
+  for(let i=0;i<50;i++){
+    const h=document.createElement("div");
+    h.className="heart";
+    h.innerText="♥";
+    h.style.left=Math.random()*100+"%";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),3000);
+  }
+
+  setInterval(()=>{
+    const k=document.createElement("div");
+    k.className="kiss";
+    k.innerText="💋";
+    k.style.left=Math.random()*100+"%";
+    document.body.appendChild(k);
+    setTimeout(()=>k.remove(),3000);
+  },400);
+};
+</script>
+
+</body>
+</html>
